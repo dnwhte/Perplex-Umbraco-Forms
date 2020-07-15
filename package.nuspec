@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Perplex.Umbraco.Forms.On.Steroids</id>
+    <version>1.8.4</version>
+    <authors>dawhite</authors>
+    <owners>dawhite</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Improves Umbraco Forms with the ability to create folders and new field types with more advanced options.</description>
+    <releaseNotes>Modified for LCSC.</releaseNotes>
+  </metadata>
+  <files>
+    <file src="Perplex.Umbraco.Forms\obj\Release\Perplex.Umbraco.Forms.dll" target="lib/net472"></file>
+    <file src="Perplex.Umbraco.Forms\App_Plugins\**" target="content/App_Plugins" />
+    <file src="Perplex.Umbraco.Forms\Views\**" target="content/Views" />
+  </files>
+</package>
