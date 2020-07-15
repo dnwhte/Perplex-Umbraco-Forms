@@ -318,9 +318,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)App_Plugins\*.*" "$(SolutionDir)..\Test project\UmbracoFormsExtensions\App_Plugins" /Y /I /E
-xcopy "$(ProjectDir)Views\*.*" "$(SolutionDir)..\Test project\UmbracoFormsExtensions\Views" /Y /I /E
-xcopy "$(ProjectDir)bin\Debug\Perplex.Umbraco.Forms*" "$(SolutionDir)..\Test project\UmbracoFormsExtensions\bin" /Y /I /E</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -330,4 +329,6 @@ xcopy "$(ProjectDir)bin\Debug\Perplex.Umbraco.Forms*" "$(SolutionDir)..\Test pro
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="Pack">
+  </Target>
 </Project>
