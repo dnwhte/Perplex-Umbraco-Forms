@@ -11,7 +11,7 @@ function ($scope, $http, formResource, perplexFormResource) {
 
         // When the forms are loaded, load all folders
         perplexFormResource.getRootFolder().then(function (response) {
-            if (response.data != null) {
+            if (response.data !== null) {
                 var rootFolder = response.data;
 
                 // Make sure to order the forms of the root folder 
@@ -26,8 +26,10 @@ function ($scope, $http, formResource, perplexFormResource) {
                 // it will always be expanded anyway, so start
                 // at the root's children
                 _.each(rootFolder.folders, function (folder) {
-                    $scope.folders.push(folder);
-                    initFolder(folder);
+                    if (folder.disabled === false) {
+                        $scope.folders.push(folder);
+                        initFolder(folder);
+                    }
                 });
             }
 
