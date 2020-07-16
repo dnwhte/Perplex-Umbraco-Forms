@@ -1,54 +1,65 @@
 ﻿angular.module("umbraco").controller("Perplex.Form.FolderController",
-	function ($scope, $routeParams, $http, formResource, perplexFormResource, navigationService, treeService, notificationsService) {
-	    $scope.folder = null;
-	    $scope.forms = [];
-	    
-	    var nodeId = $routeParams.id;	    
+    function ($scope, $routeParams, $http, formResource, perplexFormResource, navigationService, treeService, notificationsService, userService) {
+        $scope.folder = null;
+        $scope.forms = [];
+        $scope.canEdit = false;
 
-	    // Load all forms (required to display their names, we do not store form names)	    
-	    formResource.getOverView()
-        .then(function (response) {
-            $scope.forms = response.data;
+        var nodeId = $routeParams.id;
 
-            // Load this folder
-            perplexFormResource.getFolder(nodeId).then(function (response) {
-                $scope.folder = response.data;
+        // Load all forms (required to display their names, we do not store form names)	    
+        formResource.getOverView()
+            .then(function (response) {
+                $scope.forms = response.data;
 
-                // Goto folder in tree 	    
-                navigationService.syncTree({ tree: "form", path: $scope.folder.relativePath, forceReload: false, activate: true });
-                
-            }, function (error) { });
-        });
+                // Load this folder
+                perplexFormResource.getFolder(nodeId).then(function (response) {
+                    $scope.folder = response.data;
 
-	    $scope.update = function () {
-	        perplexFormResource.update($scope.folder).then(function (response) {
-	            // Reload folder
-	            navigationService.syncTree({ tree: "form", path: $scope.folder.relativePath, forceReload: true }).then(function (syncArgs) {
-	                navigationService.reloadNode(syncArgs.node);
+                    // determine if editor can edit folder name
+                    if ($scope.folder.parentId !== '-1') {
+                        $scope.canEdit = true;
+                    } else {
+                        userService.getCurrentUser().then(function (user) {
+                            $scope.canEdit = user.userGroups.includes('admin');
+                        });
+                    }
 
-	                // Hide the tree
-	                navigationService.hideNavigation();
+                    // Goto folder in tree 	    
+                    navigationService.syncTree({ tree: "form", path: $scope.folder.relativePath, forceReload: false, activate: true });
 
-	                notificationsService.showNotification({ type: 0, header: "Folder saved" });
-	            });
-	        });
-	    };
+                }, function (error) { });
+            });
 
-	    $scope.getFormName = function (formId) {
-	        var form = getForm(formId);
-	        if (form == null) return "";
+        $scope.update = function () {
+            perplexFormResource.update($scope.folder).then(function (response) {
+                // Reload folder
+                navigationService.syncTree({ tree: "form", path: $scope.folder.relativePath, forceReload: true }).then(function (syncArgs) {
+                    navigationService.reloadNode(syncArgs.node);
 
-	        return form.name;
-	    };
+                    // Hide the tree
+                    navigationService.hideNavigation();
 
-	    $scope.getFormId = function (formId) {
-	        var form = getForm(formId);
-	        if (form == null) return "";
+                    notificationsService.showNotification({ type: 0, header: "Folder saved" });
+                });
+            });
+        };
 
-	        return form.id;
-	    }
+        $scope.getFormName = function (formId) {
+            var form = getForm(formId);
+            if (form == null) return "";
 
-	    function getForm(formId) {
-	        return _.find($scope.forms, { id: formId });
-	    }
-	});
+            return form.name;
+        };
+
+        $scope.getFormId = function (formId) {
+            var form = getForm(formId);
+            if (form == null) return "";
+
+            return form.id;
+        }
+
+        function getForm(formId) {
+            return _.find($scope.forms, { id: formId });
+        }
+    }
+);
