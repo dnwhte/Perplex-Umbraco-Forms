@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution FIles", "Solution FIles", "{283B407A-25A4-4FF6-BB65-99D686869BB4}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		package.nuspec = package.nuspec
 	EndProjectSection
 EndProject
 Global

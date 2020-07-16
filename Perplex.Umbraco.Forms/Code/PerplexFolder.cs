@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using Umbraco.Core;
+using Umbraco.Core.IO;
 using Umbraco.Core.Models.Membership;
 using Umbraco.Forms.Data;
+using Umbraco.Forms.Data.Storage;
 using Umbraco.Web;
 
 namespace PerplexUmbraco.Forms.Code
@@ -126,6 +128,8 @@ namespace PerplexUmbraco.Forms.Code
         }
 
         private static PerplexFolder rootFolder;
+        private static FormsFileSystem formsFileSystem = FileSystemProviderManager.Current.GetFileSystemProvider<FormsFileSystem>();
+
         /// <summary>
         /// Returns the root folder.
         /// Any other folders are nested inside the root folder.
@@ -136,23 +140,26 @@ namespace PerplexUmbraco.Forms.Code
             {
                 var jsonFile = GetFilePath();
 
-                if (File.Exists(jsonFile))
+                if (formsFileSystem.FileExists(jsonFile))
                 {
                     try
                     {
-                        string json = File.ReadAllText(jsonFile);
-                        if (!string.IsNullOrEmpty(json))
+                        using (StreamReader sr = new StreamReader(formsFileSystem.OpenFile(jsonFile)))
                         {
-                            PerplexFolder folder = null;
-                            try { folder = JsonConvert.DeserializeObject<PerplexFolder>(json); }
-                            catch (JsonSerializationException) { }
-
-                            // Only set as rootfolder if deserialization was succesful
-                            if (folder != null)
+                            string json = sr.ReadToEnd();
+                            if (!string.IsNullOrEmpty(json))
                             {
-                                rootFolder = folder;
+                                PerplexFolder folder = null;
+                                try { folder = JsonConvert.DeserializeObject<PerplexFolder>(json); }
+                                catch (JsonSerializationException) { }
+
+                                // Only set as rootfolder if deserialization was succesful
+                                if (folder != null)
+                                {
+                                    rootFolder = folder;
+                                }
                             }
-                        }
+                        }                           
                     }
                     catch (Exception) { } // TODO: Handle errors?
                 }
@@ -303,7 +310,7 @@ namespace PerplexUmbraco.Forms.Code
 
         public static string GetFilePath()
         {
-            return HostingEnvironment.MapPath(Constants.FOLDERS_DATA_FILE_PATH);
+            return formsFileSystem.GetFullPath(Constants.FOLDERS_DATA_FILE_PATH);
         }
 
         /// <summary>
@@ -359,15 +366,19 @@ namespace PerplexUmbraco.Forms.Code
             // It's theoretically possible to trigger this method multiple times before writing of a previous call is finished,
             // triggering an I/O exception when the file is still locked for writing.
             // We ignore that error.
-            try {
-                var filePath = GetFilePath();
-                var directory = System.IO.Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
 
-                File.WriteAllText(filePath, JsonConvert.SerializeObject(GetRootFolder(), Formatting.Indented)); }
+
+            try
+            {
+                var filePath = GetFilePath();
+                string fileContents = JsonConvert.SerializeObject(GetRootFolder(), Formatting.Indented);
+
+                using (MemoryStream ms = new MemoryStream(Encoding.Default.GetBytes(fileContents)))
+                {
+                    ms.Position = 0; // might help with Azurite freezing? https://github.com/Azure/azure-sdk-for-net/issues/10814
+                    formsFileSystem.AddFile(filePath, ms);
+                }
+            }
             catch (IOException) { }
         }
 

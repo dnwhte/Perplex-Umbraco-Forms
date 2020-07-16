@@ -58,7 +58,7 @@ namespace PerplexUmbraco.Forms.Code
         /// <summary>
         /// Relative location of folders.json file
         /// </summary>
-        public const string FOLDERS_DATA_FILE_PATH = DATATYPE_ROOT_FOLDER + "/data/folders.json";
+        public const string FOLDERS_DATA_FILE_PATH = "perplex/data/folders.json";
 
         /// <summary>
         /// Relative location of PerplexUmbracoForms.config file

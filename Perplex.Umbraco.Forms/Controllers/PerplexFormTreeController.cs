@@ -191,6 +191,8 @@ namespace PerplexUmbraco.Forms.Controllers
 
                 if (folder != null)
                 {
+                    bool isAdmin = UmbracoContext.Current.Security.CurrentUser.Groups.FirstOrDefault(g => g.Alias == "admin") != null;
+
                     // If the folder is disabled, we will remove all entries from the menu,
                     // except for "Reload" (it's harmless)                    
                     if (folder.Disabled)
@@ -211,8 +213,11 @@ namespace PerplexUmbraco.Forms.Controllers
                     // Remove existing Delete (works only on a Form)
                     menu.Items.RemoveAll(m => m.Alias == "delete");
 
-                    // Delete Folder
-                    AddMenuItem(menu, "Delete Folder", view: "deleteFolder", icon: "icon icon-delete");
+                    if (isAdmin || folder.ParentId != "-1")
+                    {
+                        // Delete Folder
+                        AddMenuItem(menu, "Delete Folder", view: "deleteFolder", icon: "icon icon-delete");
+                    }                   
 
                     // Sort Folder
                     AddMenuItem(menu, "Sort", view: "sort", icon: "icon icon-navigation-vertical");

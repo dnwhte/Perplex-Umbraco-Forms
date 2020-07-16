@@ -1,11 +1,11 @@
 ﻿<div ng-controller="Perplex.Form.FolderController" class="perplex-folder">
     <form novalidate ng-submit="update()">
-        <div class="umb-panel-header">
-            <div class="row-fluid">
-                <div>
-                    <div class="span7">
-                        <div class="umb-headline-editor-wrapper">
-                            <input type="text" localize="placeholder" class="umb-headline" placeholder="Enter a name..." ng-model="folder.name" style="border: 1px solid rgba(175, 175, 175, 0.196078); background-color: rgba(255, 255, 255, 0.196078);">
+        <div class="umb-editor-header umb-panel-header">
+            <div class="umb-panel-header-content-wrapper">
+                <div class="umb-panel-header-content">
+                    <div class="umb-panel-header-left-side -top-position">
+                        <div class="umb-panel-header-title-wrapper">
+                            <input ng-disabled="!canEdit" type="text" localize="placeholder" class="umb-panel-header-name-input" placeholder="Enter a name..." ng-model="folder.name">
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="umb-tab-buttons" style="padding-left: 15px;" ng-if="!folder.disabled">
+            <div class="umb-tab-buttons" style="padding-left: 15px;" ng-if="canEdit && !folder.disabled">
                 <div class="btn-group">
                     <button data-hotkey="ctrl+s" class="btn btn-success">
                         <localize key="buttons_save" class="ng-isolate-scope ng-scope">Save</localize>

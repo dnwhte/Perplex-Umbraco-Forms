@@ -265,11 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Plugins\PerplexUmbracoForms\css\style.css.map">
-      <DependentUpon>style.css</DependentUpon>
-    </None>
     <None Include="App_Plugins\PerplexUmbracoForms\css\style.less" />
-    <None Include="App_Plugins\PerplexUmbracoForms\data\folders.json" />
     <None Include="App_Plugins\PerplexUmbracoForms\package.manifest" />
     <None Include="App_Plugins\PerplexUmbracoForms\PerplexUmbracoForms.config">
       <SubType>Designer</SubType>
@@ -277,11 +273,11 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Views\Partials\Forms\Fieldtypes\Perplex\FieldType.PerplexFileUpload.cshtml" />
-    <None Include="Views\Partials\Forms\Fieldtypes\Perplex\FieldType.PerplexImageUpload.cshtml" />
-    <None Include="Views\Partials\Forms\Fieldtypes\Perplex\FieldType.PerplexRecaptcha.cshtml" />
-    <None Include="Views\Partials\Forms\Fieldtypes\Perplex\FieldType.PerplexTextarea.cshtml" />
-    <None Include="Views\Partials\Forms\Fieldtypes\Perplex\FieldType.PerplexTextField.cshtml" />
+    <None Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PerplexFileUpload.cshtml" />
+    <None Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PerplexImageUpload.cshtml" />
+    <None Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PerplexRecaptcha.cshtml" />
+    <None Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PerplexTextarea.cshtml" />
+    <None Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.PerplexTextField.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\PerplexUmbracoForms\backoffice\common\fieldtypes\PerplexFileUpload.html" />
@@ -321,7 +317,9 @@
     <Content Include="App_Plugins\PerplexUmbracoForms\views\moveForm.html" />
     <Content Include="App_Plugins\PerplexUmbracoForms\views\sort.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Partials\Forms\Fieldtypes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Perplex.Umbraco.Forms.On.Steroids</id>
-    <version>1.8.4</version>
+    <version>1.8.4-custom</version>
     <authors>dawhite</authors>
     <owners>dawhite</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
