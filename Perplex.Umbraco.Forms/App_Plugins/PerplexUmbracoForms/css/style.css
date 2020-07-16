@@ -140,10 +140,10 @@
 .perplex-sort h4.bold {
   font-weight: bold;
 }
-.perplex-folder input[type="text"] {
+/*.perplex-folder input[type="text"] {
   font-size: 20px;
   height: 25px;
-}
+}*/
 .perplex-umbraco-form-picker,
 .perplex-form-start-nodes {
   /* Clear button */
