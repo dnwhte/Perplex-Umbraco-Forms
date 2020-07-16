@@ -265,11 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Plugins\PerplexUmbracoForms\css\style.css.map">
-      <DependentUpon>style.css</DependentUpon>
-    </None>
     <None Include="App_Plugins\PerplexUmbracoForms\css\style.less" />
-    <None Include="App_Plugins\PerplexUmbracoForms\data\folders.json" />
     <None Include="App_Plugins\PerplexUmbracoForms\package.manifest" />
     <None Include="App_Plugins\PerplexUmbracoForms\PerplexUmbracoForms.config">
       <SubType>Designer</SubType>
