@@ -375,6 +375,7 @@ namespace PerplexUmbraco.Forms.Code
 
                 using (MemoryStream ms = new MemoryStream(Encoding.Default.GetBytes(fileContents)))
                 {
+                    ms.Position = 0; // might help with Azurite freezing? https://github.com/Azure/azure-sdk-for-net/issues/10814
                     formsFileSystem.AddFile(filePath, ms);
                 }
             }
